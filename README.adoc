@@ -1,0 +1,24 @@
+== Rasberry PI sensor
+
+=== How to use
+* setup pip
+----
+$ pipenv run sync
+----
+
+* Add secrets/google-api-credentials.json
+** See https://developers.google.com/sheets/api/quickstart/python
+* Add secrets/sheet.json
+----
+{
+  "sheet_id": "1b22FfKfrGTAjgAKqV203oPbdF4G0NbvLrLx1A9ULhEo"
+}
+----
+
+* Execute sample and create secrets/token.pickle
+----
+$ pipenv run python sample.py
+# Run your browser and open the shown link.
+# If you execute this command in CUI, run curl the url that the browser redirect to.
+#  ex: curl https://localhost:xxx/yyyy
+----
