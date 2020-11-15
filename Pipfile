@@ -4,11 +4,20 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "*"
 
 [packages]
 google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
+dht11 = "*"
+"rpi.gpio" = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+sheet = "python -m helper.google_spreadsheet"
+dht = "python -m helper.dht"
+main = "python main.py"
+main-prod = "python main.py --prod"

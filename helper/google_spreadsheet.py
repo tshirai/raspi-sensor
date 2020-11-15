@@ -9,9 +9,11 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
+from . import util
+
 
 # Set SHEET_ID
-with open('secrets/sheet.json', 'r') as f:
+with open(util.project_path('secrets', 'sheet.json'), 'r') as f:
     config = json.loads(f.read())
     SHEET_ID = config['sheet_id']
 
@@ -23,9 +25,9 @@ def get_sheet_url():
     return f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit"
 
 
-def get_spreadsheets():
-    TOKEN = 'secrets/token.pickle'
-    CREDENTIALS = 'secrets/google-api-credentials.json'
+def get_sheets():
+    TOKEN = util.project_path('secrets', 'token.pickle')
+    CREDENTIALS = util.project_path('secrets', 'google-api-credentials.json')
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
     creds = None
@@ -50,14 +52,14 @@ def get_spreadsheets():
     return service.spreadsheets()
 
 
-def append_to_spreadsheet(sheet_name, data):
+def append(sheet_name, data):
     # ex. APITest!A:E
     sheet_range = f"{sheet_name}!A:{string.ascii_uppercase[len(data)]}"
     body = {
         'values': [data],
     }
-    sheets = get_spreadsheets()
-    print(f"Request:")
+    sheets = get_sheets()
+    print("Request:")
     print(f"  sheet_range: {sheet_range}")
     print(f"  body: {body}")
     result = sheets.values().append(spreadsheetId=SHEET_ID,
@@ -65,13 +67,21 @@ def append_to_spreadsheet(sheet_name, data):
                                     valueInputOption='USER_ENTERED',
                                     body=body).execute()
 
-    print(f"Response:")
+    print("Response:")
     print(f"  updated: {result['updates']['updatedRange']}")
+
+
+def header(sheet_name, last_column='Z'):
+    sheet_range = f"{sheet_name}!A:{last_column}"
+    sheets = get_sheets()
+    result = sheets.values().get(spreadsheetId=SHEET_ID,
+                                 range=sheet_range).execute()
+    return result.get('values')[0]
 
 
 def main():
     print(get_sheet_url())
-    append_to_spreadsheet('APITest', [0, 1, 2, 3, 4])
+    append('APITest', [0, 1, 2, 3, 4])
 
 
 if __name__ == '__main__':
