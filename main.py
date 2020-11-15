@@ -2,7 +2,6 @@
 
 
 import argparse
-import sys
 from helper import google_spreadsheet as sheet
 from helper import dht
 from helper import raspi
@@ -10,6 +9,36 @@ from helper import util
 
 SHEET_NAME = 'HomeData'
 TEST_SHEET_NAME = 'HomeDataTest'
+
+
+def is_valid_value(value):
+    return type(value) is float or type(value) is int
+
+
+def status(key, value):
+    if not is_valid_value(value):
+        return False
+
+    if key == 'raspi_temperature':
+        if value > 60:
+            return 'normal'
+        else:
+            return 'high'
+    elif key == 'room_temperature':
+        if value < 22:
+            return 'low'
+        elif value > 27:
+            return 'high'
+        else:
+            return 'normal'
+    elif key == 'room_humidity':
+        if value < 40:
+            return 'low'
+        else:
+            return 'normal'
+    else:
+        print(f"WARN: {key} is not supported.")
+        return 'normal'
 
 
 def to_line(header, data):

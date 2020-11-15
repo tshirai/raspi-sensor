@@ -133,3 +133,4 @@ secrets/*
 
 # for production env.
 *.log
+voices/*

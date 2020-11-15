@@ -22,3 +22,17 @@ $ pipenv run python sample.py
 # If you execute this command in CUI, run curl the url that the browser redirect to.
 #  ex: curl https://localhost:xxx/yyyy
 ----
+
+
+== Talk via Bluetooth
+
+----
+$ sudo bluetoothctl
+scan on
+trust E8:.....
+pair E8:.....
+connect E8:.....
+paired-devices
+quit
+$ sudo apt install bluealsa mplayer
+----
