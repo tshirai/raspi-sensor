@@ -130,3 +130,6 @@ dmypy.json
 
 # Confidentials
 secrets/*
+
+# for production env.
+*.log
