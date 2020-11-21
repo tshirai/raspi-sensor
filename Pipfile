@@ -12,6 +12,7 @@ google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
 dht11 = "*"
 "rpi.gpio" = "*"
+co2meter = "*"
 
 [requires]
 python_version = "3.8"
@@ -19,5 +20,6 @@ python_version = "3.8"
 [scripts]
 sheet = "python -m helper.google_spreadsheet"
 dht = "python -m helper.dht"
+co2 = "python -m helper.co2"
 main = "python main.py"
 main-prod = "python main.py --prod"

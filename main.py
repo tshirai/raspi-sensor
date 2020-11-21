@@ -3,8 +3,7 @@
 
 import argparse
 from helper import google_spreadsheet as sheet
-from helper import dht
-from helper import raspi
+from helper import raspi, dht, co2
 from helper import util
 
 SHEET_NAME = 'HomeData'
@@ -50,12 +49,16 @@ def to_line(header, data):
 
 
 def update(sheet_name):
-    result = dht.read()
+    print("Fetchng temperature and humidity...")
+    dht_result = dht.read()
+    print("Fetchng CO2 level...")
+    co2_result = co2.read()
     data = {
         'timestamp': util.now().strftime('%Y-%m-%d %H:%M:%S'),
         'raspi_temperature': raspi.formatted_temperature(),
-        'room_temperature': result[0],
-        'room_humidity': result[1],
+        'room_temperature': dht_result[0],
+        'room_humidity': dht_result[1],
+        'room_co2': co2_result[0],
     }
 
     header = sheet.header(sheet_name)
