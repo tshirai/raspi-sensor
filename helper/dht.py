@@ -5,7 +5,7 @@ import dht11
 from functools import lru_cache
 
 
-@lru_cache(maxsize=128)
+@lru_cache(maxsize=1)
 def get_instance():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)

@@ -1,7 +1,13 @@
 == Rasberry PI sensor
 
 === How to use
-* setup pip
+* install libusb-dev
+** See: https://github.com/vfilimonov/co2meter
+----
+$ sudo apt-get install libusb-1.0-0-dev libhidapi-dev libudev-dev
+----
+
+* install pip packages
 ----
 $ pipenv run sync
 ----
@@ -23,6 +29,20 @@ $ pipenv run python sample.py
 #  ex: curl https://localhost:xxx/yyyy
 ----
 
+=== Add CO2
+* Add a udev rule.
+----
+$ sudo vim.tiny /etc/udev/rules.d/98-co2mon.rules
+KERNEL=="hidraw*", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a052", GROUP="plugdev", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a052", GROUP="plugdev", MODE="0666"
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+----
+
+* Run CO2 Monitor
+----
+$ pipenv run co2
+----
 
 == Talk via Bluetooth
 
