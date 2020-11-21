@@ -49,10 +49,10 @@ def to_line(header, data):
 
 
 def update(sheet_name):
-    print("Fetchng temperature and humidity...")
+    print("Fetching temperature and humidity...")
     dht_result = dht.read()
-    print("Fetchng CO2 level...")
-    co2_result = co2.read()
+    print("Fetching CO2 level...")
+    co2_result = co2.formatted()
     data = {
         'timestamp': util.now().strftime('%Y-%m-%d %H:%M:%S'),
         'raspi_temperature': raspi.formatted_temperature(),
