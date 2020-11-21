@@ -31,11 +31,12 @@ def formatted():
 def main():
     try:
         mon = get_instance()
+        print(mon.info)
     except OSError as e:
         print(e)
         print("ERROR: Unknown error about USB CO2 monitor.")
         return
-    print(mon.info)
+
     result = read()
     print("CO2 level: %d" % result[0])
     print("Temperature: %-3.1f" % result[1])
